@@ -5,6 +5,7 @@ This demonstrates using Azure AI services after authentication.
 """
 
 import os
+import subprocess
 from typing import Optional
 
 
@@ -29,7 +30,6 @@ def check_azure_credentials() -> bool:
         return True
     
     # Check if Azure CLI is authenticated
-    import subprocess
     try:
         result = subprocess.run(
             ['az', 'account', 'show'],
@@ -39,7 +39,7 @@ def check_azure_credentials() -> bool:
         if result.returncode == 0:
             print("✅ Authenticated with Azure CLI")
             return True
-    except:
+    except (FileNotFoundError, subprocess.TimeoutExpired, Exception):
         pass
     
     print("⚠️  No Azure credentials found")
