@@ -61,7 +61,7 @@ def check_llm_installation():
             timeout=5
         )
         return result.returncode == 0
-    except:
+    except Exception:
         return False
 
 

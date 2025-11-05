@@ -1,5 +1,5 @@
-# Use the latest Ubuntu LTS as base
-FROM ubuntu:latest
+# Use Ubuntu 24.04 LTS (Noble Numbat) as base
+FROM ubuntu:24.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive

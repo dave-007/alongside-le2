@@ -76,7 +76,7 @@ def langchain_azure_example():
         
         llm = AzureChatOpenAI(
             azure_deployment=os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
-            api_version="2024-02-01",
+            api_version=os.getenv("AZURE_OPENAI_API_VERSION", "2024-02-01"),
             temperature=0.7
         )
         
