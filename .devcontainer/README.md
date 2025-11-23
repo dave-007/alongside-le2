@@ -1,219 +1,232 @@
-# Alongside LE2 DevContainer
+# DevContainer Configuration
 
-This devcontainer provides a complete development environment for working with AI, Azure, Python, and .NET.
+This directory contains the DevContainer configuration for the Alongside Learning Environment, optimized for Azure AI and LLM development.
 
-## What's Included
+## Overview
 
-### Base System
-- **Ubuntu Latest**: Latest Ubuntu LTS as the base operating system
-- **Non-root user**: `vscode` user for secure development
+This DevContainer is based on **Ubuntu 24.04 LTS** (the latest Ubuntu LTS release) and includes popular tools and features commonly used by the community.
 
-### Programming Languages & Runtimes
-- **Python 3.11+**: Latest Python with pip and virtual environment support
-- **.NET 8.0 SDK**: Latest .NET SDK for C# development
+## Features
 
-### Azure Tools
-- **Azure CLI**: Command-line interface for Azure services
-- **Azure AI SDKs**:
-  - `azure-ai-ml`: Azure Machine Learning SDK
-  - `azure-ai-textanalytics`: Text Analytics API
-  - `azure-ai-formrecognizer`: Form Recognizer API
-  - `azure-cognitiveservices-speech`: Speech Services SDK
-  - `azure-ai-inference`: Azure AI Inference SDK
-  - `azure-ai-projects`: Azure AI Projects SDK
-  - `azure-identity`: Azure authentication
-  - `azure-storage-blob`: Blob storage
-  - `azure-keyvault-secrets`: Key Vault integration
-- **Prompt Flow**: Azure AI workflow tool
+### Base Image
+- **Ubuntu 24.04 LTS** - Latest long-term support release
+- Microsoft's official DevContainer base image: `mcr.microsoft.com/devcontainers/base:ubuntu-24.04`
 
-### AI/LLM Tools
+### Included Tools & Features
 
-#### Simon Willison's LLM
-- **LLM CLI**: https://llm.datasette.io/
-- Pre-installed plugins:
-  - `llm-gpt4all`: Local LLM support
-  - `llm-claude-3`: Claude 3 API access
-  - `llm-gemini`: Google Gemini API access
+#### Programming Languages
+- **Python 3.11** - Latest stable Python with pip and development tools
+- **Node.js LTS** - Latest LTS version with npm and node-gyp dependencies
+- **TypeScript** - TypeScript compiler and ts-node
 
-#### Daniel Miessler's Fabric
-- **Fabric**: https://github.com/danielmiessler/fabric
-- Installed via pipx for clean isolation
-- Configuration directory: `~/.config/fabric`
+#### Version Control & Collaboration
+- **Git** - Latest version
+- **GitHub CLI (gh)** - For GitHub operations from the terminal
 
-### Python Libraries
+#### Cloud & Container Tools
+- **Azure CLI** - For managing Azure resources
+- **Docker-in-Docker** - For building and running containers within the devcontainer
 
-#### AI/ML Libraries
-- `openai`: OpenAI API client
-- `anthropic`: Anthropic (Claude) API client
-- `langchain`: LLM application framework
-- `langchain-openai`: LangChain OpenAI integration
-- `langchain-community`: Community integrations
+#### Development Utilities
+- **Zsh with Oh My Zsh** - Enhanced shell with themes and plugins
+- **Common utilities** - curl, wget, vim, jq, tree, htop
 
-#### Data Science
-- `numpy`: Numerical computing
-- `pandas`: Data manipulation and analysis
-- `scikit-learn`: Machine learning algorithms
-- `matplotlib`: Data visualization
-- `seaborn`: Statistical data visualization
-- `jupyter`: Jupyter notebooks
-- `ipykernel`: IPython kernel for Jupyter
+### Python Packages
 
-#### Development Tools
-- `black`: Code formatter
-- `pylint`: Code linter
-- `flake8`: Style guide enforcement
-- `pytest`: Testing framework
-- `mypy`: Static type checker
-
-#### Utilities
-- `requests`: HTTP library
-- `python-dotenv`: Environment variable management
-- `pyyaml`: YAML parser
-- `click`: Command-line interface creation
+Pre-installed Python packages for Azure AI and LLM development:
+- `azure-ai-textanalytics` - Azure Text Analytics
+- `azure-cognitiveservices-speech` - Azure Speech Services
+- `openai` - OpenAI API client (works with Azure OpenAI)
+- `langchain` - Framework for LLM applications
+- `transformers` - Hugging Face transformers library
+- `pytest` & `pytest-asyncio` - Testing frameworks
+- `black` & `pylint` - Code formatting and linting
 
 ### VS Code Extensions
 
-Pre-configured extensions:
-- Python support (with Pylance)
-- C# / .NET support
-- Azure Functions
-- Azure Resource Groups
-- GitHub Copilot
-- GitHub Copilot Chat
+Automatically installed extensions:
+- Python development: Python, Pylance, Jupyter
+- Azure tools: Azure Functions, Azure CLI
+- GitHub tools: Copilot, Copilot Chat
+- Docker support
+- Code formatting: Prettier, ESLint
 
 ## Getting Started
 
 ### Prerequisites
-- Visual Studio Code with the "Dev Containers" extension
-- Docker Desktop installed and running
+- [Visual Studio Code](https://code.visualstudio.com/)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop)
+- [Dev Containers Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
 ### Opening the DevContainer
 
-1. Clone this repository
-2. Open the folder in VS Code
-3. When prompted, click "Reopen in Container"
+1. Open this repository in VS Code
+2. When prompted, click "Reopen in Container"
    - Or use Command Palette (F1) → "Dev Containers: Reopen in Container"
+3. Wait for the container to build and start (first time takes 5-10 minutes)
+4. The `post-create.sh` script will run automatically to set up the environment
 
-### First-Time Setup
+### Post-Creation Setup
 
-After the container builds and starts:
+After the container is created, you'll need to authenticate with services:
 
-1. **Azure Login**:
-   ```bash
-   az login
-   ```
-
-2. **Configure LLM** (Simon Willison's tool):
-   ```bash
-   # Set OpenAI API key (example)
-   llm keys set openai
-   
-   # Test LLM
-   llm "What is the capital of France?"
-   ```
-
-3. **Configure Fabric** (Daniel Miessler's tool):
-   ```bash
-   # Setup Fabric
-   fabric --setup
-   
-   # Update patterns
-   fabric --update
-   ```
-
-4. **Test installations**:
-   ```bash
-   python --version
-   dotnet --version
-   az --version
-   llm --version
-   fabric --version
-   ```
-
-## Usage Examples
-
-### Using LLM
+#### 1. Azure CLI Authentication
 ```bash
-# Simple prompt
-llm "Explain quantum computing"
-
-# Use a specific model
-llm -m gpt-4 "Write a haiku about AI"
-
-# Pipe content
-cat myfile.txt | llm "Summarize this"
+az login
 ```
+Follow the browser prompts to authenticate.
 
-### Using Fabric
+#### 2. GitHub CLI Authentication
 ```bash
-# Extract wisdom from content
-echo "Your text here" | fabric --pattern extract_wisdom
+gh auth login
+```
+Choose your preferred authentication method.
 
-# Summarize content
-cat article.txt | fabric --pattern summarize
-
-# Create AI-powered analysis
-fabric --pattern analyze_claims < document.txt
+#### 3. Git Configuration (if not already set)
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
 ```
 
-### Using Azure AI
-```python
-from azure.ai.textanalytics import TextAnalyticsClient
-from azure.identity import DefaultAzureCredential
-
-# Authenticate and use Azure services
-credential = DefaultAzureCredential()
-client = TextAnalyticsClient(endpoint="<your-endpoint>", credential=credential)
+#### 4. Verify Authentication
+```bash
+python scripts/check_authentication.py
 ```
 
-### Using LangChain with Azure
-```python
-from langchain_openai import AzureChatOpenAI
-from azure.identity import DefaultAzureCredential
+#### 5. Run Post-Authentication Setup
+```bash
+python scripts/post_auth_setup.py
+```
 
-# Initialize Azure OpenAI
-llm = AzureChatOpenAI(
-    azure_deployment="<deployment-name>",
-    api_version="2024-02-01"
-)
+## Directory Structure
+
+```
+.devcontainer/
+├── devcontainer.json       # Main DevContainer configuration
+├── post-create.sh          # Post-creation setup script
+└── README.md              # This file
+
+scripts/
+├── check_authentication.py # Verify authentication status
+└── post_auth_setup.py     # Post-authentication setup
+
+tests/
+└── test_authentication.py # Tests for authentication scripts
+
+samples/
+└── azure_ai_example.py    # Sample Azure AI usage examples
 ```
 
 ## Customization
 
-### Adding Python Packages
+### Adding More Python Packages
+
+Edit `.devcontainer/post-create.sh` and add packages to the pip install command:
 ```bash
-pip install <package-name>
+pip install your-package-name
 ```
 
-### Adding .NET Packages
-```bash
-dotnet add package <package-name>
+### Adding VS Code Extensions
+
+Edit `.devcontainer/devcontainer.json` under `customizations.vscode.extensions`:
+```json
+"extensions": [
+    "existing.extension",
+    "your.new-extension"
+]
 ```
 
-### Adding LLM Plugins
+### Port Forwarding
+
+The following ports are automatically forwarded:
+- `8000` - Python Server
+- `3000` - Node Server  
+- `5000` - Flask Server
+- `8080` - General purpose
+
+Add more in `devcontainer.json` under `forwardPorts`.
+
+## Mounted Volumes
+
+The following local directories are mounted in the container:
+- `~/.azure` → `/home/vscode/.azure` (Azure CLI credentials, cached)
+- `~/.ssh` → `/home/vscode/.ssh-localhost` (SSH keys, read-only)
+
+## Authentication Scripts
+
+### check_authentication.py
+
+Verifies that you're authenticated with:
+- Azure CLI (`az`)
+- GitHub CLI (`gh`)
+- Git configuration
+
+Run with:
 ```bash
-llm install <plugin-name>
+python scripts/check_authentication.py
+```
+
+Returns exit code 0 if all checks pass, 1 otherwise.
+
+### post_auth_setup.py
+
+Runs after authentication to:
+- List Azure subscriptions
+- Verify GitHub access
+- Create sample workspace directories
+- Generate helpful documentation
+
+Run with:
+```bash
+python scripts/post_auth_setup.py
+```
+
+## Testing
+
+Run tests with:
+```bash
+pytest tests/ -v
+```
+
+Or run specific test file:
+```bash
+pytest tests/test_authentication.py -v
 ```
 
 ## Troubleshooting
 
-### Container won't build
+### Container fails to start
 - Ensure Docker Desktop is running
-- Check your internet connection
+- Check Docker has enough resources (4GB RAM minimum, 8GB recommended)
 - Try rebuilding: Command Palette → "Dev Containers: Rebuild Container"
 
-### Permission issues
-- The container uses a non-root `vscode` user by default
-- Use `sudo` for system-level commands if needed
+### Authentication issues
+- Run `python scripts/check_authentication.py` to diagnose
+- For Azure: Try `az account clear` then `az login` again
+- For GitHub: Try `gh auth logout` then `gh auth login` again
 
-### Azure CLI login issues
-- Run `az login --use-device-code` for alternative authentication
-- Check your Azure subscription: `az account show`
+### Python package conflicts
+- Rebuild the container to get a fresh environment
+- Or manually update packages: `pip install --upgrade package-name`
+
+## Popular Community Features
+
+This DevContainer uses features from the official DevContainers Features repository, which are:
+- **Maintained by Microsoft and the community**
+- **Widely adopted** across thousands of projects
+- **Regularly updated** for security and compatibility
+- **Well-documented** with extensive examples
+
+All features are from the official `ghcr.io/devcontainers/features/*` namespace.
 
 ## Resources
 
-- [Simon Willison's LLM Documentation](https://llm.datasette.io/)
-- [Daniel Miessler's Fabric GitHub](https://github.com/danielmiessler/fabric)
-- [Azure AI Documentation](https://learn.microsoft.com/en-us/azure/ai-services/)
-- [LangChain Documentation](https://python.langchain.com/)
-- [VS Code Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers)
+- [DevContainers Documentation](https://containers.dev/)
+- [VS Code DevContainers](https://code.visualstudio.com/docs/devcontainers/containers)
+- [DevContainers Features](https://containers.dev/features)
+- [Azure CLI Documentation](https://docs.microsoft.com/cli/azure/)
+- [GitHub CLI Documentation](https://cli.github.com/manual/)
+
+## License
+
+This configuration is part of the Alongside Learning Environment project.
