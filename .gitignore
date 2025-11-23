@@ -36,6 +36,27 @@ htmlcov/
 .tox/
 
 # IDEs
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+*.cover
+.hypothesis/
+.venv
+venv/
+ENV/
+env/
+
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.log
+*.tmp
+
+# VS Code
 .vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -73,3 +94,19 @@ logs/
 tmp/
 temp/
 *.tmp
+*.key
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Azure
+.azure/
+
+# LLM and Fabric config (may contain API keys)
+.config/
+*.db

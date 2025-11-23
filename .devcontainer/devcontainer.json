@@ -34,6 +34,12 @@
     }
   },
 
+  "name": "Alongside LE2 - AI Development Environment",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "."
+  },
+  "features": {},
   "customizations": {
     "vscode": {
       "extensions": [
@@ -47,6 +53,11 @@
         "ms-vscode.azurecli",
         "esbenp.prettier-vscode",
         "dbaeumer.vscode-eslint"
+        "ms-dotnettools.csharp",
+        "ms-azuretools.vscode-azurefunctions",
+        "ms-azuretools.vscode-azureresourcegroups",
+        "GitHub.copilot",
+        "GitHub.copilot-chat"
       ],
       "settings": {
         "python.defaultInterpreterPath": "/usr/local/bin/python",
@@ -84,4 +95,11 @@
       "onAutoForward": "notify"
     }
   }
+        "python.formatting.provider": "black"
+      }
+    }
+  },
+  "forwardPorts": [],
+  "postCreateCommand": "python --version && dotnet --version && az --version && llm --version && fabric --version",
+  "remoteUser": "vscode"
 }
